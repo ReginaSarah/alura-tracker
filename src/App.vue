@@ -1,11 +1,11 @@
 <template>
-  <main>
+  <main >
     <div class="columns is-gapless is-multiline">
       <div class="column is-one-quarter">
-        <BarraLateral />
+        <BarraLateral @aoTemaAlterado="trocarTema"/>
       </div>
-      <div class="column is-three-quarter">
-        <Formulario />
+      <div class="column is-three-quarter conteudo" >
+        <Tarefas />
       </div>
     </div>
 
@@ -15,17 +15,41 @@
 
 <script>
 import BarraLateral from './components/BarraLateral.vue'
-import Formulario from './components/Formulario.vue'
+import Tarefas from './views/Tarefas.vue';
 
 export default {
   name: 'App',
   components: {
     BarraLateral,
-    Formulario,
+    Tarefas,
+  },
+  methods: {
+    trocarTema(modoEscuro){
+      if(modoEscuro){
+        document.querySelector('main').classList.toggle('modo-escuro');
+      } 
+      else {
+        document.querySelector('main').classList.remove('modo-escuro');
+      }
+    }
   }
 }
 </script>
 
 <style>
+
+main {
+  --bg-primario: white;
+  --texto-primario: black;
+}
+
+main.modo-escuro {
+  --bg-primario: #363636;
+  --texto-primario: white;
+}
+
+.conteudo {
+  background-color: var(--bg-primario);
+}
 
 </style>

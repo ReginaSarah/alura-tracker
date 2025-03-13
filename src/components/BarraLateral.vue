@@ -4,15 +4,40 @@
     <h1>
         <img src="../assets/logo.png" alt="Logo do Vue">
     </h1>
+    <Botao :texto="textoBotao" :icone="iconeBotao" @onClick="alterarTema"/>
 </header>
 </template>
 
 <script >
 
 import  { defineComponent } from 'vue';
+import Botao from './Botao.vue';
 
 export default defineComponent({
-    name: 'BarraLateral'
+    name: 'BarraLateral',
+    components: {
+      Botao
+    },
+    emits: [ 'aoTemaAlterado' ],
+    data (){
+      return {
+        modoEscuro: false,
+      };
+    },
+    computed: {
+        textoBotao(){
+          return this.modoEscuro ? "Desativar Modo Escuro" : 'Ativar Modo Escuro';
+        },
+        iconeBotao(){
+          return this.modoEscuro ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    },
+    methods: {
+        alterarTema(){
+          this.modoEscuro = !this.modoEscuro;
+            this.$emit('aoTemaAlterado', this.modoEscuro);
+        }
+    }
 });
 
 </script>

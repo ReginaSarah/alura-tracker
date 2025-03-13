@@ -1,30 +1,13 @@
 <template>
 
-    <div class="box">
+    <div class="box formulario">
         <div class="columns">
             <div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa">
-                <input type="text" class="input" placeholder="Qual tarefa você deseja iniciar?">
+                <input type="text" class="input" placeholder="Qual tarefa você deseja iniciar?"
+                    v-model="tarefa">
             </div>
             <div class="column">
-                <div class="is-flex is-align-itens-center is-justify-content-space-between">
-                    <section>
-                        <strong>
-                            00:00:00
-                        </strong>
-                    </section>
-                    <button class="button">
-                        <span class="icon">
-                            <i class="fas fa-play"></i>
-                        </span>
-                        <span>play</span>
-                    </button>
-                    <button class="button">
-                        <span class="icon">
-                            <i class="fas fa-stop"></i>
-                        </span>
-                        <span>stop</span>
-                    </button>
-                </div>
+                <Temporizador @aoTemporizadorFinalizado="adicionarTarefa"/>
             </div>
         </div>
     </div>
@@ -34,11 +17,42 @@
 <script>
 
 import { defineComponent } from 'vue';
+import Temporizador from './Temporizador.vue';
 
 export default defineComponent({
-    name: 'Formulario'
+    name: 'Formulario',
+    components: {
+        Temporizador
+    },
+    data(){
+        return {
+            tarefa: '',
+        }
+    },
+    computed: {
+    },
+    methods: {
+
+        adicionarTarefa(tempoEmSegundos){
+            const objeto = {
+                nome: this.tarefa == '' ? 'Tarefa sem nome' : this.tarefa,
+                tempo: tempoEmSegundos,
+            }
+            this.$emit('aoAdicionarTarefa', objeto);
+            this.tarefa = '';
+        }
+    
+    },
+    emits: ['aoAdicionarTarefa'],
 });
 
 </script>
 
-<style scoped></style>
+<style>
+
+.formulario {
+    color: var(--texto-primario);
+    background-color: var(--bg-primario);
+}
+
+</style>
