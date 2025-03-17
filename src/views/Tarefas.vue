@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="column is-three-quarter conteudo">
         <Formulario @aoAdicionarTarefa="adicionarTarefa"/>
         <Tarefa v-for="(item, index) in lista" :key="index" :tarefa="item" />
         <Box v-if="lista.length == 0">

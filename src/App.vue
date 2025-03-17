@@ -4,9 +4,7 @@
       <div class="column is-one-quarter">
         <BarraLateral @aoTemaAlterado="trocarTema"/>
       </div>
-      <div class="column is-three-quarter conteudo" >
-        <Tarefas />
-      </div>
+      <router-view />
     </div>
 
   </main>
@@ -15,13 +13,11 @@
 
 <script>
 import BarraLateral from './components/BarraLateral.vue'
-import Tarefas from './views/Tarefas.vue';
 
 export default {
   name: 'App',
   components: {
     BarraLateral,
-    Tarefas,
   },
   methods: {
     trocarTema(modoEscuro){
