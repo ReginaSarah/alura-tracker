@@ -1,22 +1,19 @@
 <template>
-    <div class="box has-text-weight-bold">
-        <slot></slot>
-    </div>
+  <div class="box has-text-weight-bold">
+    <slot></slot>
+  </div>
 </template>
 
-<script>
-
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'Box',
+  name: 'Box'
 });
-
 </script>
 
 <style scoped>
 .box {
-     background: #FAF0CA;
-     margin: 15px;
- }
+  background: #FAF0CA;
+}
 </style>

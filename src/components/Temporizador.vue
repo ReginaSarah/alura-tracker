@@ -1,58 +1,56 @@
 <template>
-    <div class="is-flex is-align-itens-center is-justify-content-space-between">
-        <Cronometro :tempoEmSegundos="tempoEmSegundos"  />
-
-        <Botao texto="Iniciar" icone="fas fa-play" @onClick="iniciar" :desabilitado="cronometroAtivo" />
-
-        <Botao texto="Parar" icone="fas fa-stop" @onClick="finalizar" :desabilitado="!cronometroAtivo" />
-    </div>
-
-
+  <section class="is-flex is-align-items-center is-justify-content-space-between">
+    <Cronometro :tempoEmSegundos="tempoEmSegundos"/>
+    <button class="button" @click="iniciar" :disabled="cronometroRodando">
+      <span class="icon">
+        <i class="fas fa-play"></i>
+      </span>
+      <span>play</span>
+    </button>
+    <button class="button" @click="finalizar" :disabled="!cronometroRodando">
+      <span class="icon">
+        <i class="fas fa-stop"></i>
+      </span>
+      <span>stop</span>
+    </button>
+  </section>
 </template>
 
-<script>
-
-import { defineComponent } from 'vue';
-import Cronometro from './Cronometro.vue';
-import Botao from './Botao.vue';
+<script lang="ts">
+import { defineComponent } from "vue";
+import Cronometro from "./Cronometro.vue";
 
 export default defineComponent({
-    name: 'Temporizador',
-    components: {
-        Cronometro,
-        Botao
+  name: "Temporizador",
+  emits: ['aoFinalizarTarefa'],
+  components: {
+    Cronometro,
+  },
+  data () {
+    return {
+      tempoEmSegundos: 0,
+      cronometroRodando: false,
+      cronometro: 0 
+    }
+  },
+  methods: {
+    iniciar () : void {
+      this.cronometroRodando = true
+      this.cronometro = setInterval(() => {
+        this.tempoEmSegundos += 1
+      }, 1000)
     },
-    data() {
-        return {
-            tempoEmSegundos: 0,
-            cronometro: null,
-            cronometroAtivo: false,
-        }
-    },
-    emits:["aoTemporizadorFinalizado"],
-    methods: {
-
-        iniciar(){
-            console.log('Iniciando a tarefa');       
-            this.cronometro = setInterval(() => {
-                this.tempoEmSegundos++;
-            }, 1000);     
-            this.cronometroAtivo = true;
-        },
-        finalizar(){
-            console.log('Finalizando a tarefa');
-            
-            clearInterval(this.cronometro);
-            this.cronometroAtivo = false;
-            this.$emit('aoTemporizadorFinalizado', this.tempoEmSegundos);
-            this.tempoEmSegundos = 0;
-            
-            
-        }
-
-    },
+    finalizar () : void {
+      this.$emit('aoFinalizarTarefa', this.tempoEmSegundos)
+      this.tempoEmSegundos = 0
+      this.cronometroRodando = false
+      clearInterval(this.cronometro)
+    }
+  }
 });
-
 </script>
-
-<style scoped></style>
+<style scoped>
+.button {
+  margin-left: 8px;
+}
+</style>
